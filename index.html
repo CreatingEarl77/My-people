@@ -7,44 +7,50 @@
   html, body { 
     background-color: #000 !important; 
     overflow: hidden !important; height: 100vh !important; width: 100vw !important;
-    display: flex; justify-content: center; align-items: center;
   }
   #superContainer {
+    position: fixed !important; top: 0; left: 0;
     width: 100vw !important; height: 100vh !important;
     display: flex !important; flex-direction: column !important;
     background: #000 !important;
   }
+  /* 1. IMAGE BOX (45vh) */
   #top {
-    height: 48vh !important; width: 100% !important;
+    height: 45vh !important; width: 100% !important;
     display: flex !important; justify-content: center !important; align-items: center !important;
-    border-bottom: 2px solid #333 !important;
+    border-bottom: 3px solid #444 !important;
   }
-  #top img { height: 90% !important; width: auto !important; object-fit: contain; }
+  #top img { height: 95% !important; width: auto !important; object-fit: contain; }
 
+  /* 2. NERD BOX (35vh) - LARGE TEXT & FULL CENTERED */
   #mid {
-    height: 34vh !important; width: 100% !important;
-    background: #000 !important; 
+    height: 35vh !important; width: 100% !important;
+    background: #111 !important; 
+    display: flex !important; flex-direction: column !important;
+    justify-content: space-evenly !important; align-items: center !important;
+    padding: 15px 5% !important; border-bottom: 3px solid #444 !important;
+  }
+  .line { color: #ffffff !important; font-family: 'Courier New', monospace; font-size: 20px; font-weight: bold; text-align: center; }
+  .stats { 
+    color: #ffffff !important; font-family: monospace; font-size: 17px; 
+    display: flex !important; justify-content: space-around !important;
+    width: 100% !important; border-top: 1px solid #555; padding-top: 10px;
+  }
+  .highlight { color: #0f0; } /* Resource Green */
+
+  /* 3. BUTTON BAR (20vh) - PUSHED UP DRAMATICALLY */
+  #bot {
+    height: 20vh !important; width: 100% !important;
     display: flex !important; flex-direction: column !important;
     justify-content: center !important; align-items: center !important;
-    text-align: center !important; border-bottom: 2px solid #333 !important;
+    padding-bottom: 50px !important; /* Forces buttons up away from tablet edge */
+    gap: 15px !important;
   }
-  .line { color: #ffffff !important; font-family: monospace; font-size: 16px; font-weight: bold; margin: 2px 0; width: 100%; }
-  .stats { 
-    color: #ffffff !important; font-family: monospace; font-size: 14px; 
-    display: flex !important; justify-content: center !important; gap: 15px !important;
-    width: 100% !important; border-top: 1px solid #444; padding-top: 4px; margin-top: 4px;
-  }
-
-  #bot {
-    height: 18vh !important; width: 100% !important;
-    display: grid !important; place-items: center !important;
-    padding-bottom: 35px !important; /* Lifts buttons off the tablet floor */
-  }
-  .row { display: flex !important; gap: 25px !important; margin-bottom: 8px; }
+  .row { display: flex !important; gap: 30px !important; }
   .btn {
-    width: 130px !important; height: 48px !important;
-    border: 3px solid #fff !important; border-radius: 8px !important;
-    color: #fff !important; font-weight: bold !important; font-size: 14px !important;
+    width: 140px !important; height: 55px !important;
+    border: 4px solid #fff !important; border-radius: 12px !important;
+    color: #fff !important; font-weight: bold !important; font-size: 16px !important;
     cursor: pointer !important; text-transform: uppercase !important;
   }
 </style>
@@ -54,27 +60,27 @@
   <div id="top"><img id="ageImg" src="https://user.uploads.dev/file/fe81017f6eaa2d4475633a99025a08db.jpg"></div>
   <div id="mid">
     <div id="news" class="line">PROJECT: EIPENSTIEN MICROCOSM</div>
-    <div id="last" class="line">ACTION: (AWAITING)</div>
-    <div id="effect" class="line">EFFECT: STEADY</div>
+    <div id="last" class="line">ACTION: [AWAITING]</div>
+    <div id="effect" class="line" style="color:#aaa; font-style:italic;">EFFECT: NO DATA YET...</div>
     <div class="stats">
       <span>YEAR: <span id="yVal">-7000</span></span>
       <span>AGE: <span id="aVal">STONE AGE</span></span>
     </div>
     <div class="stats">
-      <span>CIV1: <span id="p1">1000</span> (<span id="rL1">FOOD</span>: <span id="r1">100</span>%)</span>
+      <span>CIV1: <span id="p1">1000</span> | <span id="rL1">FOOD</span>: <span id="r1" class="highlight">100</span>%</span>
     </div>
     <div class="stats">
-      <span>CIV2: <span id="p2">1000</span> (<span id="rL2">FOOD</span>: <span id="r2">100</span>%)</span>
+      <span>CIV2: <span id="p2">1000</span> | <span id="rL2">FOOD</span>: <span id="r2" class="highlight">100</span>%</span>
     </div>
   </div>
   <div id="bot">
     <div class="row">
-      <button class="btn" style="background:#800" onclick="act(0)" id="b0"></button>
-      <button class="btn" style="background:#800" onclick="act(1)" id="b1"></button>
+      <button class="btn" style="background:#900" onclick="act(0)" id="b0"></button>
+      <button class="btn" style="background:#900" onclick="act(1)" id="b1"></button>
     </div>
     <div class="row">
-      <button class="btn" style="background:#008" onclick="act(2)" id="b2"></button>
-      <button class="btn" style="background:#008" onclick="act(3)" id="b3"></button>
+      <button class="btn" style="background:#009" onclick="act(2)" id="b2"></button>
+      <button class="btn" style="background:#009" onclick="act(3)" id="b3"></button>
     </div>
   </div>
 </div>
@@ -86,6 +92,15 @@
     2: { n: "MIDDLE AGE 2/3", i: "https://user.uploads.dev/file/58967e7edf54e6791b41986e77e924b7.jpg", p: ["TAX","TEMPLE","PENANCE","COMMAND","DECREE","WORKS","DYNASTY","REFORM"] },
     3: { n: "MODERN AGE 3/3", i: "https://user.uploads.dev/file/f1492929c1178fb413a3697356f0bb20.jpg", p: ["INDUSTRY","DATA","MEDIA","NETWORK","FUSION","STRIKE","PATENT","ROCKET"] }
   };
+
+  const warnings = [
+    "EXPANSION NOTED; STABILITY THINS.",
+    "GROWTH REGISTERED; UNSEEN DEBT ACCRUES.",
+    "RESOURCES STABILIZED; ENTROPY LURKS.",
+    "POPULATION SPIKE; THE SEAL WEAKENS.",
+    "ORDER RESTORED; SHADOWS LENGTHEN.",
+    "ACTION SUCCESSFUL; EQUILIBRIUM SHIFTS."
+  ];
 
   function roll() {
     let pool = data[age].p;
@@ -101,28 +116,30 @@
     let move = current[s];
     document.getElementById('last').innerText = "ACTION: " + move;
     
+    // Lore Trigger
     if(move === "TEACH") document.getElementById('news').innerText = "NEWS: GRONK TEACHES BIRD TO TALK";
     
+    // Vague Warning Logic
+    let warn = warnings[Math.floor(Math.random() * warnings.length)];
+    document.getElementById('effect').innerText = "EFFECT: " + warn;
+
     if(s < 2) { 
-        if(["HUNT","GATHER","WORKS","INDUSTRY"].includes(move)) res1 = Math.min(100, res1 + 25);
-        p1 += 150; p2 -= 50; 
+        if(["HUNT","GATHER","WORKS","INDUSTRY"].includes(move)) res1 = Math.min(100, res1 + 35);
+        p1 += 150; p2 -= 60; 
     } else { 
-        if(["HUNT","GATHER","WORKS","INDUSTRY"].includes(move)) res2 = Math.min(100, res2 + 25);
-        p2 += 150; p1 -= 50; 
+        if(["HUNT","GATHER","WORKS","INDUSTRY"].includes(move)) res2 = Math.min(100, res2 + 35);
+        p2 += 150; p1 -= 60; 
     }
-    document.getElementById('effect').innerText = "EFFECT: INTERVENTION REGISTERED.";
     current = roll(); update();
   }
 
   setInterval(() => {
     if(!active || paused) return;
     yr++;
+    res1 -= 1.4; res2 -= 1.4; // High Hunger Speed
     
-    // THE HUNGER CRANK: Fast decay
-    res1 -= 1.2; res2 -= 1.2; 
-    
-    let p1L = (res1 <= 0) ? 20 : 4; 
-    let p2L = (res2 <= 0) ? 20 : 4;
+    let p1L = (res1 <= 0) ? 22 : 4; 
+    let p2L = (res2 <= 0) ? 22 : 4;
     p1 -= p1L; p2 -= p2L;
 
     if(p1 <= 0 || p2 <= 0) {
