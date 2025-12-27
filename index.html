@@ -14,66 +14,54 @@
     display: flex !important; flex-direction: column !important;
     background: #000 !important; z-index: 999999 !important;
   }
-  #top {
-    height: 40vh !important; width: 100% !important;
-    display: flex !important; justify-content: center !important; align-items: center !important;
-    border-bottom: 2px solid #333 !important;
-  }
+  /* LAYOUT LAW: 56vh / 28vh / 16vh */
+  #top { height: 56vh !important; width: 100% !important; display: flex !important; justify-content: center !important; align-items: center !important; border-bottom: 2px solid #333 !important; }
   #top img { height: 95% !important; width: auto !important; object-fit: contain; }
-  #mid {
-    height: 30vh !important; width: 100% !important;
-    background: #000 !important; display: flex !important;
-    flex-direction: column !important; justify-content: space-evenly !important;
-    padding: 0 10% !important; border-bottom: 2px solid #333 !important;
+  
+  #mid { 
+    height: 28vh !important; width: 100% !important; background: #151515 !important; 
+    display: flex !important; flex-direction: column !important; justify-content: space-evenly !important;
+    padding: 0 8% !important; border-bottom: 2px solid #333 !important;
   }
-  /* FORCED WHITE TEXT FOR THE NERD BOX */
-  .line { color: #ffffff !important; font-family: monospace; font-size: 18px; text-align: center; font-weight: bold; }
-  .stats { color: #ffffff !important; font-family: monospace; font-size: 15px; display: flex; justify-content: space-between; border-top: 1px solid #444; }
+  .line { color: #ffffff !important; font-family: monospace; font-size: 16px; text-align: center; font-weight: bold; }
+  .stats { color: #ffffff !important; font-family: monospace; font-size: 14px; display: flex; justify-content: space-between; border-top: 1px solid #444; padding-top: 2px; }
 
-  #bot {
-    height: 30vh !important; width: 100% !important;
-    display: flex !important; flex-direction: column !important;
-    justify-content: flex-start !important; align-items: center !important; 
-    gap: 15px !important;
-    padding-top: 15px !important; /* THIS PUSHES BUTTONS UP SO BARS DON'T COVER THEM */
-  }
+  #bot { height: 16vh !important; width: 100% !important; display: flex !important; flex-direction: column !important; justify-content: center !important; align-items: center !important; gap: 10px !important; }
   .row { display: flex !important; gap: 20px !important; }
-  .btn {
-    width: 140px !important; height: 60px !important;
-    border: 3px solid #fff !important; border-radius: 8px !important;
-    color: #fff !important; font-weight: bold !important; font-size: 16px !important;
-    cursor: pointer !important; text-transform: uppercase !important;
-  }
+  .btn { width: 130px !important; height: 50px !important; border: 3px solid #fff !important; border-radius: 8px !important; color: #fff !important; font-weight: bold !important; font-size: 14px !important; cursor: pointer !important; text-transform: uppercase !important; }
 </style>
 </head>
 <body>
 <div id="superContainer">
   <div id="top"><img id="ageImg" src="https://user.uploads.dev/file/fe81017f6eaa2d4475633a99025a08db.jpg"></div>
   <div id="mid">
-    <div id="news" class="line">SYSTEM: STABILIZED</div>
+    <div id="news" class="line">THE TERRARIUM IS SEALED.</div>
     <div id="last" class="line">ACTION: (AWAITING)</div>
     <div id="effect" class="line">EFFECT: STEADY</div>
-    <div class="stats"><span>YEAR: <span id="yVal">-7000</span></span><span>AGE: <span id="aVal">STONE AGE</span></span></div>
-    <div class="stats"><span>CIV1: <span id="p1">1000</span> (<span id="f1">100</span>%)</span><span>CIV2: <span id="p2">1000</span> (<span id="f2">100</span>%)</span></div>
+    <div class="stats"><span>YEAR: <span id="yVal">-7000</span></span><span>AGE: <span id="aVal">STONE AGE 1/3</span></span></div>
+    <div class="stats"><span>CIV1: <span id="p1">1000</span> (<span id="rLabel1">FOOD</span>: <span id="r1">100</span>%)</span></div>
+    <div class="stats"><span>CIV2: <span id="p2">1000</span> (<span id="rLabel2">FOOD</span>: <span id="r2">100</span>%)</span></div>
   </div>
   <div id="bot">
     <div class="row">
-      <button class="btn" style="background:#800" onclick="act(0)" id="b0"></button>
-      <button class="btn" style="background:#800" onclick="act(1)" id="b1"></button>
+      <button class="btn" style="background:#7a1c1c" onclick="act(0)" id="b0"></button>
+      <button class="btn" style="background:#7a1c1c" onclick="act(1)" id="b1"></button>
     </div>
     <div class="row">
-      <button class="btn" style="background:#008" onclick="act(2)" id="b2"></button>
-      <button class="btn" style="background:#008" onclick="act(3)" id="b3"></button>
+      <button class="btn" style="background:#1c3f7a" onclick="act(2)" id="b2"></button>
+      <button class="btn" style="background:#1c3f7a" onclick="act(3)" id="b3"></button>
     </div>
   </div>
 </div>
 <script>
-  let yr=-7000, age=1, p1=1000, p2=1000, f1=100, f2=100, active=false;
+  let yr=-7000, age=1, p1=1000, p2=1000, res1=100, res2=100, active=false, paused=false;
+  const labels = { 1: "FOOD", 2: "GRAIN", 3: "ENERGY" };
   const data = {
-    1: { n: "STONE AGE", i: "https://user.uploads.dev/file/fe81017f6eaa2d4475633a99025a08db.jpg", p: ["HUNT","GATHER","FIRE","RAID","HIDE","EXPLORE","BUILD","ADAPT"] },
-    2: { n: "MIDDLE AGE", i: "https://user.uploads.dev/file/58967e7edf54e6791b41986e77e924b7.jpg", p: ["TAX","TEMPLE","PENANCE","COMMAND","DECREE","WORKS","DYNASTY","REFORM"] },
-    3: { n: "MODERN AGE", i: "https://user.uploads.dev/file/f1492929c1178fb413a3697356f0bb20.jpg", p: ["INDUSTRY","DATA","MEDIA","NETWORK","FUSION","STRIKE","PATENT","ROCKET"] }
+    1: { n: "STONE AGE 1/3", i: "https://user.uploads.dev/file/fe81017f6eaa2d4475633a99025a08db.jpg", p: ["HUNT","GATHER","FIRE","RITUAL","RAID","HIDE","TEACH","EXPLORE","FEAR","ADAPT","REST","OBSERVE","DOMINATE","MERGE","BUILD","SACRIFICE"] },
+    2: { n: "MIDDLE AGE 2/3", i: "https://user.uploads.dev/file/58967e7edf54e6791b41986e77e924b7.jpg", p: ["TAX","TEMPLE","PENANCE","COMMAND","DECREE","WORKS","DYNASTY","REFORM"] },
+    3: { n: "MODERN AGE 3/3", i: "https://user.uploads.dev/file/f1492929c1178fb413a3697356f0bb20.jpg", p: ["INDUSTRY","DATA","MEDIA","NETWORK","FUSION","STRIKE","PATENT","ROCKET"] }
   };
+
   function roll() {
     let pool = data[age].p;
     let picks = [...pool].sort(()=>.5-Math.random()).slice(0,4);
@@ -81,29 +69,72 @@
     return picks;
   }
   let current = roll();
+
   function act(s) {
+    if(paused) return;
     active = true;
-    if(s<2){ f1=Math.min(100,f1+20); p1+=150; } else { f2=Math.min(100,f2+20); p2+=150; }
-    document.getElementById('last').innerText = "ACTION: " + current[s];
+    let move = current[s];
+    document.getElementById('last').innerText = "ACTION: " + move;
+    
+    // Resource Logic: Replenishment
+    if(s < 2) { 
+        if(["HUNT","GATHER","WORKS","INDUSTRY"].includes(move)) res1 = Math.min(100, res1 + 25);
+        p1 += 120; p2 -= 40; 
+    } else { 
+        if(["HUNT","GATHER","WORKS","INDUSTRY"].includes(move)) res2 = Math.min(100, res2 + 25);
+        p2 += 120; p1 -= 40; 
+    }
+    
+    document.getElementById('effect').innerText = "EFFECT: INTERVENTION REGISTERED.";
     current = roll(); update();
   }
+
   setInterval(() => {
-    if(!active) return;
+    if(!active || paused) return;
     yr++;
-    f1 -= (0.25 * age); f2 -= (0.25 * age);
-    if(p1 > p2*3 || p2 > p1*3) { document.getElementById('news').innerText = "NEWS: CIVIL WAR"; p1-=15; p2-=15; }
-    else if(f1<10 || f2<10) { document.getElementById('news').innerText = "NEWS: STARVATION"; }
-    p1 -= (f1<=0)?40:5; p2 -= (f2<=0)?40:5;
-    if(yr===-3987) age=2; if(yr===-974) age=3;
-    if(p1<=0 || p2<=0) location.reload();
+    
+    // Resource Dwindle Logic
+    res1 -= 0.6; res2 -= 0.6;
+    
+    // Population Law: Relentless Pressure
+    let p1Loss = (res1 <= 0) ? 12 : 2;
+    let p2Loss = (res2 <= 0) ? 12 : 2;
+    p1 -= p1Loss; p2 -= p2Loss;
+
+    // Plague Law (Stone Age 5000 Threshold)
+    if(age === 1) {
+      if(p1 > 5000) { p1 = Math.floor(p1 * 0.5); document.getElementById('news').innerText = "NEWS: PLAGUE RAVAGES CIV 1"; }
+      if(p2 > 5000) { p2 = Math.floor(p2 * 0.5); document.getElementById('news').innerText = "NEWS: PLAGUE RAVAGES CIV 2"; }
+    }
+
+    // Failure Condition
+    if(p1 <= 0 || p2 <= 0) {
+      paused = true;
+      document.getElementById('news').innerText = "EXPERIMENT TERMINATED";
+      setTimeout(() => location.reload(), 4000);
+    }
+
+    // Age Boundaries
+    if(yr === -3987 && age === 1) triggerPause(2);
+    if(yr === -974 && age === 2) triggerPause(3);
+    
     update();
   }, 900);
+
+  function triggerPause(next) {
+    paused = true;
+    document.getElementById('news').innerText = "NEWS: AN AGE ENDS";
+    setTimeout(() => { age = next; paused = false; update(); }, 3000);
+  }
+
   function update() {
     document.getElementById('yVal').innerText = yr;
-    document.getElementById('p1').innerText = Math.floor(p1);
-    document.getElementById('p2').innerText = Math.floor(p2);
-    document.getElementById('f1').innerText = Math.floor(f1);
-    document.getElementById('f2').innerText = Math.floor(f2);
+    document.getElementById('p1').innerText = Math.max(0, Math.floor(p1));
+    document.getElementById('p2').innerText = Math.max(0, Math.floor(p2));
+    document.getElementById('r1').innerText = Math.max(0, Math.floor(res1));
+    document.getElementById('r2').innerText = Math.max(0, Math.floor(res2));
+    document.getElementById('rLabel1').innerText = labels[age];
+    document.getElementById('rLabel2').innerText = labels[age];
     document.getElementById('aVal').innerText = data[age].n;
     document.getElementById('ageImg').src = data[age].i;
   }
