@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -22,7 +22,7 @@
 
   #bot { height: 18vh; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; padding-top: 10px; }
   .row { display: flex; gap: 35px; margin-bottom: 12px; }
-  .btn { width: 135px; height: 55px; border: 4px solid #fff; border-radius: 12px; color: #fff; font-weight: bold; font-size: 15px; }
+  .btn { width: 135px; height: 55px; border: 4px solid #fff; border-radius: 12px; color: #fff; font-weight: bold; font-size: 15px; cursor: pointer; }
   #ghost { height: 65px; width: 100%; }
 </style>
 </head>
@@ -69,7 +69,7 @@
   function roll() {
     let picks = [...pool].sort(()=>.5-Math.random()).slice(0,4);
     for(let i=0;i<4;i++) document.getElementById('b'+i).innerText = picks[i];
-    secCounter = 0; // Reset the 8-second counter
+    secCounter = 0;
     return picks;
   }
   let current = roll();
@@ -83,12 +83,12 @@
 
     if(s < 2) { 
       if(["HUNT","GATHER"].includes(move)) res1 = Math.min(100, res1 + 35);
-      p1 += 150; p2 -= 60; 
+      p1 += 160; p2 -= 60; 
     } else { 
       if(["HUNT","GATHER"].includes(move)) res2 = Math.min(100, res2 + 35);
-      p2 += 150; p1 -= 60; 
+      p2 += 160; p1 -= 60; 
     }
-    current = roll(); // Reset occurs here on click
+    current = roll();
     update();
   }
 
@@ -97,15 +97,25 @@
     yr++;
     res1 -= 2.0; res2 -= 2.0; 
     
-    // FORCED RESET ENGINE
+    // 8-SECOND RESET
     secCounter++;
     if(secCounter >= 8) {
       current = roll();
       document.getElementById('effect').innerText = "OBSERVER HESITATION: POOL ROTATED.";
     }
 
-    let p1L = (res1 <= 0) ? 30 : 5; 
-    let p2L = (res2 <= 0) ? 30 : 5;
+    // THE PLAGUE (Master Canon Rule)
+    if (p1 > 5000) {
+      p1 = Math.floor(p1 * 0.5);
+      document.getElementById('news').innerText = "NEWS: PLAGUE RAVAGES CIV 1";
+    }
+    if (p2 > 5000) {
+      p2 = Math.floor(p2 * 0.5);
+      document.getElementById('news').innerText = "NEWS: PLAGUE RAVAGES CIV 2";
+    }
+
+    let p1L = (res1 <= 0) ? 35 : 5; 
+    let p2L = (res2 <= 0) ? 35 : 5;
     p1 -= p1L; p2 -= p2L;
 
     if(p1 <= 0 || p2 <= 0) {
