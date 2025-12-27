@@ -14,42 +14,42 @@
     display: flex !important; flex-direction: column !important;
     background: #000 !important;
   }
-  /* 1. IMAGE BOX (45vh) */
+  /* 1. IMAGE BOX (40vh) */
   #top {
-    height: 45vh !important; width: 100% !important;
+    height: 40vh !important; width: 100% !important;
     display: flex !important; justify-content: center !important; align-items: center !important;
-    border-bottom: 3px solid #444 !important;
+    border-bottom: 4px solid #444 !important;
   }
   #top img { height: 95% !important; width: auto !important; object-fit: contain; }
 
-  /* 2. NERD BOX (35vh) - LARGE TEXT & FULL CENTERED */
+  /* 2. NERD BOX (40vh) - DOMINANT TEXT & CENTERED CONTENT */
   #mid {
-    height: 35vh !important; width: 100% !important;
-    background: #111 !important; 
+    height: 40vh !important; width: 100% !important;
+    background: #0a0a0a !important; 
     display: flex !important; flex-direction: column !important;
-    justify-content: space-evenly !important; align-items: center !important;
-    padding: 15px 5% !important; border-bottom: 3px solid #444 !important;
+    justify-content: center !important; align-items: center !important;
+    padding: 20px !important; border-bottom: 4px solid #444 !important;
+    gap: 12px !important;
   }
-  .line { color: #ffffff !important; font-family: 'Courier New', monospace; font-size: 20px; font-weight: bold; text-align: center; }
+  .line { color: #ffffff !important; font-family: 'Courier New', monospace; font-size: 22px; font-weight: bold; text-align: center; line-height: 1.3; }
   .stats { 
-    color: #ffffff !important; font-family: monospace; font-size: 17px; 
+    color: #ffffff !important; font-family: monospace; font-size: 18px; 
     display: flex !important; justify-content: space-around !important;
-    width: 100% !important; border-top: 1px solid #555; padding-top: 10px;
+    width: 100% !important; border-top: 1px solid #333; padding-top: 15px; margin-top: 10px;
   }
-  .highlight { color: #0f0; } /* Resource Green */
+  .highlight { color: #0f0; text-shadow: 0 0 5px #0f0; }
 
-  /* 3. BUTTON BAR (20vh) - PUSHED UP DRAMATICALLY */
+  /* 3. BUTTON BAR (20vh) - CRITICALLY LIFTED */
   #bot {
     height: 20vh !important; width: 100% !important;
     display: flex !important; flex-direction: column !important;
     justify-content: center !important; align-items: center !important;
-    padding-bottom: 50px !important; /* Forces buttons up away from tablet edge */
-    gap: 15px !important;
+    padding-bottom: 70px !important; /* MASSIVE LIFT to fix low buttons */
   }
-  .row { display: flex !important; gap: 30px !important; }
+  .row { display: flex !important; gap: 40px !important; margin-bottom: 15px; }
   .btn {
-    width: 140px !important; height: 55px !important;
-    border: 4px solid #fff !important; border-radius: 12px !important;
+    width: 140px !important; height: 60px !important;
+    border: 5px solid #fff !important; border-radius: 12px !important;
     color: #fff !important; font-weight: bold !important; font-size: 16px !important;
     cursor: pointer !important; text-transform: uppercase !important;
   }
@@ -59,28 +59,28 @@
 <div id="superContainer">
   <div id="top"><img id="ageImg" src="https://user.uploads.dev/file/fe81017f6eaa2d4475633a99025a08db.jpg"></div>
   <div id="mid">
-    <div id="news" class="line">PROJECT: EIPENSTIEN MICROCOSM</div>
-    <div id="last" class="line">ACTION: [AWAITING]</div>
-    <div id="effect" class="line" style="color:#aaa; font-style:italic;">EFFECT: NO DATA YET...</div>
+    <div id="news" class="line">SYSTEM: ALBERT EIPENSTIEN MICROCOSM</div>
+    <div id="last" class="line" style="color: #0ff;">LAST ACTION: [AWAITING]</div>
+    <div id="effect" class="line" style="font-size: 18px; color: #aaa; font-style: italic;">EFFECT: OBSERVER STANDBY...</div>
     <div class="stats">
       <span>YEAR: <span id="yVal">-7000</span></span>
       <span>AGE: <span id="aVal">STONE AGE</span></span>
     </div>
     <div class="stats">
-      <span>CIV1: <span id="p1">1000</span> | <span id="rL1">FOOD</span>: <span id="r1" class="highlight">100</span>%</span>
+      <span>CIV 1: <span id="p1">1000</span> | <span id="rL1">FOOD</span>: <span id="r1" class="highlight">100</span>%</span>
     </div>
     <div class="stats">
-      <span>CIV2: <span id="p2">1000</span> | <span id="rL2">FOOD</span>: <span id="r2" class="highlight">100</span>%</span>
+      <span>CIV 2: <span id="p2">1000</span> | <span id="rL2">FOOD</span>: <span id="r2" class="highlight">100</span>%</span>
     </div>
   </div>
   <div id="bot">
     <div class="row">
-      <button class="btn" style="background:#900" onclick="act(0)" id="b0"></button>
-      <button class="btn" style="background:#900" onclick="act(1)" id="b1"></button>
+      <button class="btn" style="background:#a00" onclick="act(0)" id="b0"></button>
+      <button class="btn" style="background:#a00" onclick="act(1)" id="b1"></button>
     </div>
     <div class="row">
-      <button class="btn" style="background:#009" onclick="act(2)" id="b2"></button>
-      <button class="btn" style="background:#009" onclick="act(3)" id="b3"></button>
+      <button class="btn" style="background:#00a" onclick="act(2)" id="b2"></button>
+      <button class="btn" style="background:#00a" onclick="act(3)" id="b3"></button>
     </div>
   </div>
 </div>
@@ -93,14 +93,19 @@
     3: { n: "MODERN AGE 3/3", i: "https://user.uploads.dev/file/f1492929c1178fb413a3697356f0bb20.jpg", p: ["INDUSTRY","DATA","MEDIA","NETWORK","FUSION","STRIKE","PATENT","ROCKET"] }
   };
 
-  const warnings = [
-    "EXPANSION NOTED; STABILITY THINS.",
-    "GROWTH REGISTERED; UNSEEN DEBT ACCRUES.",
-    "RESOURCES STABILIZED; ENTROPY LURKS.",
-    "POPULATION SPIKE; THE SEAL WEAKENS.",
-    "ORDER RESTORED; SHADOWS LENGTHEN.",
-    "ACTION SUCCESSFUL; EQUILIBRIUM SHIFTS."
-  ];
+  // VAGUE WARNING SYSTEM - BENEFITS & OMINOUS DOWNSIDES
+  const outcomes = {
+    "HUNT": "NUTRITION SECURED; BLOODLUST RISING.",
+    "GATHER": "STOCKS FILLED; LAND DEPLETION NOTED.",
+    "FIRE": "COMFORT GRANTED; ASHES DRIFT UPWARD.",
+    "RITUAL": "FAITH HEIGHTENED; REASON RETREATS.",
+    "TEACH": "GRONK TEACHES BIRD TO TALK; SECRETS LEAKED.",
+    "RAID": "RESOURCES STOLEN; THE GRUDGE BEGINS.",
+    "FEAR": "OBEDIENCE ENSURED; THE SOUL SHRINKS.",
+    "REST": "VITALITY RECOUPED; THE CLOCK TICKS ON.",
+    "ADAPT": "SURVIVAL LIKELY; IDENTITY DISSOLVES.",
+    "DEFAULT": "ACTION REGISTERED; EQUILIBRIUM DISTURBED."
+  };
 
   function roll() {
     let pool = data[age].p;
@@ -114,21 +119,18 @@
     if(paused) return;
     active = true;
     let move = current[s];
-    document.getElementById('last').innerText = "ACTION: " + move;
+    document.getElementById('last').innerText = "LAST ACTION: " + move;
     
-    // Lore Trigger
-    if(move === "TEACH") document.getElementById('news').innerText = "NEWS: GRONK TEACHES BIRD TO TALK";
-    
-    // Vague Warning Logic
-    let warn = warnings[Math.floor(Math.random() * warnings.length)];
-    document.getElementById('effect').innerText = "EFFECT: " + warn;
+    // Detailed Cryptic Effect
+    let msg = outcomes[move] || outcomes["DEFAULT"];
+    document.getElementById('effect').innerText = "EFFECT: " + msg;
 
     if(s < 2) { 
-        if(["HUNT","GATHER","WORKS","INDUSTRY"].includes(move)) res1 = Math.min(100, res1 + 35);
-        p1 += 150; p2 -= 60; 
+        if(["HUNT","GATHER","WORKS","INDUSTRY"].includes(move)) res1 = Math.min(100, res1 + 30);
+        p1 += 160; p2 -= 60; 
     } else { 
-        if(["HUNT","GATHER","WORKS","INDUSTRY"].includes(move)) res2 = Math.min(100, res2 + 35);
-        p2 += 150; p1 -= 60; 
+        if(["HUNT","GATHER","WORKS","INDUSTRY"].includes(move)) res2 = Math.min(100, res2 + 30);
+        p2 += 160; p1 -= 60; 
     }
     current = roll(); update();
   }
@@ -136,10 +138,10 @@
   setInterval(() => {
     if(!active || paused) return;
     yr++;
-    res1 -= 1.4; res2 -= 1.4; // High Hunger Speed
+    res1 -= 1.6; res2 -= 1.6; // High Pressure Hunger
     
-    let p1L = (res1 <= 0) ? 22 : 4; 
-    let p2L = (res2 <= 0) ? 22 : 4;
+    let p1L = (res1 <= 0) ? 25 : 5; 
+    let p2L = (res2 <= 0) ? 25 : 5;
     p1 -= p1L; p2 -= p2L;
 
     if(p1 <= 0 || p2 <= 0) {
