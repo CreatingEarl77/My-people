@@ -14,41 +14,37 @@
     display: flex !important; flex-direction: column !important;
     background: #000 !important;
   }
-  /* 1. IMAGE BOX (50% of screen) */
   #top {
-    height: 50vh !important; width: 100% !important;
+    height: 48vh !important; width: 100% !important;
     display: flex !important; justify-content: center !important; align-items: center !important;
     border-bottom: 2px solid #333 !important;
   }
   #top img { height: 90% !important; width: auto !important; object-fit: contain; }
 
-  /* 2. NERD BOX (30% of screen) - HARD CENTERED */
   #mid {
-    height: 30vh !important; width: 100% !important;
+    height: 34vh !important; width: 100% !important;
     background: #000 !important; 
     display: flex !important; flex-direction: column !important;
     justify-content: center !important; align-items: center !important;
-    text-align: center !important;
-    border-bottom: 2px solid #333 !important;
+    text-align: center !important; border-bottom: 2px solid #333 !important;
   }
-  .line { color: #ffffff !important; font-family: monospace; font-size: 18px; font-weight: bold; margin: 4px 0; width: 100%; }
+  .line { color: #ffffff !important; font-family: monospace; font-size: 16px; font-weight: bold; margin: 2px 0; width: 100%; }
   .stats { 
-    color: #ffffff !important; font-family: monospace; font-size: 15px; 
-    display: flex !important; justify-content: center !important; gap: 20px !important;
-    width: 100% !important; border-top: 1px solid #444; padding-top: 8px; margin-top: 5px;
+    color: #ffffff !important; font-family: monospace; font-size: 14px; 
+    display: flex !important; justify-content: center !important; gap: 15px !important;
+    width: 100% !important; border-top: 1px solid #444; padding-top: 4px; margin-top: 4px;
   }
 
-  /* 3. BUTTON BAR (20% of screen) - LIFTED */
   #bot {
-    height: 20vh !important; width: 100% !important;
+    height: 18vh !important; width: 100% !important;
     display: grid !important; place-items: center !important;
-    padding-bottom: 40px !important; /* LARGE GAP AT BOTTOM TO LIFT BUTTONS */
+    padding-bottom: 35px !important; /* Lifts buttons off the tablet floor */
   }
-  .row { display: flex !important; gap: 30px !important; margin-bottom: 10px; }
+  .row { display: flex !important; gap: 25px !important; margin-bottom: 8px; }
   .btn {
-    width: 130px !important; height: 50px !important;
+    width: 130px !important; height: 48px !important;
     border: 3px solid #fff !important; border-radius: 8px !important;
-    color: #fff !important; font-weight: bold !important; font-size: 15px !important;
+    color: #fff !important; font-weight: bold !important; font-size: 14px !important;
     cursor: pointer !important; text-transform: uppercase !important;
   }
 </style>
@@ -57,7 +53,7 @@
 <div id="superContainer">
   <div id="top"><img id="ageImg" src="https://user.uploads.dev/file/fe81017f6eaa2d4475633a99025a08db.jpg"></div>
   <div id="mid">
-    <div id="news" class="line">SYSTEM: STABILIZED</div>
+    <div id="news" class="line">PROJECT: EIPENSTIEN MICROCOSM</div>
     <div id="last" class="line">ACTION: (AWAITING)</div>
     <div id="effect" class="line">EFFECT: STEADY</div>
     <div class="stats">
@@ -104,12 +100,15 @@
     active = true;
     let move = current[s];
     document.getElementById('last').innerText = "ACTION: " + move;
+    
+    if(move === "TEACH") document.getElementById('news').innerText = "NEWS: GRONK TEACHES BIRD TO TALK";
+    
     if(s < 2) { 
-        if(["HUNT","GATHER","WORKS","INDUSTRY"].includes(move)) res1 = Math.min(100, res1 + 35);
-        p1 += 120; p2 -= 40; 
+        if(["HUNT","GATHER","WORKS","INDUSTRY"].includes(move)) res1 = Math.min(100, res1 + 25);
+        p1 += 150; p2 -= 50; 
     } else { 
-        if(["HUNT","GATHER","WORKS","INDUSTRY"].includes(move)) res2 = Math.min(100, res2 + 35);
-        p2 += 120; p1 -= 40; 
+        if(["HUNT","GATHER","WORKS","INDUSTRY"].includes(move)) res2 = Math.min(100, res2 + 25);
+        p2 += 150; p1 -= 50; 
     }
     document.getElementById('effect').innerText = "EFFECT: INTERVENTION REGISTERED.";
     current = roll(); update();
@@ -118,10 +117,14 @@
   setInterval(() => {
     if(!active || paused) return;
     yr++;
-    res1 -= 0.6; res2 -= 0.6;
-    let p1L = (res1 <= 0) ? 12 : 3;
-    let p2L = (res2 <= 0) ? 12 : 3;
+    
+    // THE HUNGER CRANK: Fast decay
+    res1 -= 1.2; res2 -= 1.2; 
+    
+    let p1L = (res1 <= 0) ? 20 : 4; 
+    let p2L = (res2 <= 0) ? 20 : 4;
     p1 -= p1L; p2 -= p2L;
+
     if(p1 <= 0 || p2 <= 0) {
       paused = true;
       document.getElementById('news').innerText = "EXPERIMENT TERMINATED";
