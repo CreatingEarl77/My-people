@@ -7,9 +7,11 @@
   html, body { background: #000; overflow: hidden; height: 100vh; width: 100vw; font-family: monospace; }
   #superContainer { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
 
+  /* 1. IMAGE BOX (40vh) */
   #top { height: 40vh; width: 100%; display: flex; justify-content: center; align-items: center; border-bottom: 2px solid #333; }
   #top img { height: 90%; width: auto; object-fit: contain; }
 
+  /* 2. NERD BOX (42vh) - ABSOLUTE WHITE TEXT CANON */
   #mid {
     height: 42vh; width: 100%; background: #000;
     display: flex; flex-direction: column; justify-content: space-evenly; align-items: center;
@@ -18,8 +20,9 @@
   .white-line { color: #ffffff !important; font-size: 22px; font-weight: bold; text-align: center; width: 100%; }
   .effect-line { color: #ffffff !important; font-size: 18px; opacity: 0.8; font-style: italic; text-align: center; min-height: 44px; }
   .stats-grid { width: 100%; border-top: 1px solid #333; padding-top: 10px; display: flex; justify-content: space-around; color: #ffffff; font-size: 18px; }
-  .res-num { color: #0f0; font-weight: bold; }
+  .res-num { color: #0f0; font-weight: bold; } /* Green only for resource numbers per agreement */
 
+  /* 3. BUTTON BAR (18vh) - TABLET SAFE ZONE */
   #bot { height: 18vh; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; padding-top: 10px; }
   .row { display: flex; gap: 35px; margin-bottom: 12px; }
   .btn { width: 135px; height: 55px; border: 4px solid #fff; border-radius: 12px; color: #fff; font-weight: bold; font-size: 15px; cursor: pointer; }
@@ -32,7 +35,7 @@
   <div id="mid">
     <div id="news" class="white-line">ALBERT EIPENSTIEN MICROCOSM</div>
     <div id="last" class="white-line" style="font-size: 19px;">[OBSERVER STANDBY]</div>
-    <div id="effect" class="effect-line">SYSTEM ONLINE. OBSERVATION LOG START.</div>
+    <div id="effect" class="effect-line">SYSTEM ONLINE. SUBJECTS UNDER WATCH.</div>
     <div class="stats-grid"><span>YEAR: <span id="yVal">-7000</span></span><span>AGE: <span id="aVal">STONE AGE</span></span></div>
     <div class="stats-grid"><span>CIV 1: <span id="p1">1000</span> | FOOD: <span id="r1" class="res-num">100</span>%</span></div>
     <div class="stats-grid"><span>CIV 2: <span id="p2">1000</span> | FOOD: <span id="r2" class="res-num">100</span>%</span></div>
@@ -61,16 +64,15 @@
     "RITUAL": "FAITH HEIGHTENED; REASON RETREATS.",
     "TEACH": "GRONK TEACHES BIRD TO TALK; SECRETS LEAKED.",
     "FEAR": "OBEDIENCE ENSURED; THE SOUL SHRINKS.",
-    "ADAPT": "SURVIVAL LIKELY; IDENTITY DISSOLVES.",
     "DEFAULT": "ACTION REGISTERED; EQUILIBRIUM SHIFTS."
   };
-  const pool = ["HUNT","GATHER","FIRE","RITUAL","RAID","HIDE","TEACH","EXPLORE","FEAR","ADAPT","REST","OBSERVE","DOMINATE","MERGE","BUILD","SACRIFICE"];
+  const pool = ["HUNT","GATHER","FIRE","RITUAL","RAID","HIDE","TEACH","EXPLORE","FEAR","ADAPT","REST","OBSERVE","Dominate","Merge","Build","Sacrifice"];
 
   function roll() {
     let picks = [...pool].sort(()=>.5-Math.random()).slice(0,4);
-    for(let i=0;i<4;i++) document.getElementById('b'+i).innerText = picks[i];
+    for(let i=0;i<4;i++) document.getElementById('b'+i).innerText = picks[i].toUpperCase();
     secCounter = 0;
-    return picks;
+    return picks.map(v => v.toUpperCase());
   }
   let current = roll();
 
@@ -83,10 +85,10 @@
 
     if(s < 2) { 
       if(["HUNT","GATHER"].includes(move)) res1 = Math.min(100, res1 + 35);
-      p1 += 160; p2 -= 60; 
+      p1 += 180; p2 -= 60; 
     } else { 
       if(["HUNT","GATHER"].includes(move)) res2 = Math.min(100, res2 + 35);
-      p2 += 160; p1 -= 60; 
+      p2 += 180; p1 -= 60; 
     }
     current = roll();
     update();
@@ -97,14 +99,13 @@
     yr++;
     res1 -= 2.0; res2 -= 2.0; 
     
-    // 8-SECOND RESET
     secCounter++;
     if(secCounter >= 8) {
       current = roll();
       document.getElementById('effect').innerText = "OBSERVER HESITATION: POOL ROTATED.";
     }
 
-    // THE PLAGUE (Master Canon Rule)
+    /* PLAGUE LAW: 5000 THRESHOLD  */
     if (p1 > 5000) {
       p1 = Math.floor(p1 * 0.5);
       document.getElementById('news').innerText = "NEWS: PLAGUE RAVAGES CIV 1";
