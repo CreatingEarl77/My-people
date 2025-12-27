@@ -1,74 +1,42 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: #000; overflow: hidden; height: 100vh; width: 100vw; font-family: monospace; }
-  
   #superContainer { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
 
-  /* 1. IMAGE BOX */
-  #top {
-    height: 40vh; width: 100%;
-    display: flex; justify-content: center; align-items: center;
-    border-bottom: 2px solid #333;
-  }
+  #top { height: 40vh; width: 100%; display: flex; justify-content: center; align-items: center; border-bottom: 2px solid #333; }
   #top img { height: 90%; width: auto; object-fit: contain; }
 
-  /* 2. NERD BOX - WHITE CANON */
   #mid {
-    height: 42vh; width: 100%;
-    background: #000;
-    display: flex; flex-direction: column;
-    justify-content: space-evenly; align-items: center;
+    height: 42vh; width: 100%; background: #000;
+    display: flex; flex-direction: column; justify-content: space-evenly; align-items: center;
     padding: 15px; border-bottom: 2px solid #333;
   }
   .white-line { color: #ffffff !important; font-size: 22px; font-weight: bold; text-align: center; width: 100%; }
-  .effect-line { color: #ffffff !important; font-size: 18px; opacity: 0.8; font-style: italic; text-align: center; }
-  .stats-grid { 
-    width: 100%; border-top: 1px solid #333; padding-top: 10px;
-    display: flex; justify-content: space-around; color: #ffffff !important; font-size: 18px;
-  }
+  .effect-line { color: #ffffff !important; font-size: 18px; opacity: 0.8; font-style: italic; text-align: center; min-height: 44px; }
+  .stats-grid { width: 100%; border-top: 1px solid #333; padding-top: 10px; display: flex; justify-content: space-around; color: #ffffff; font-size: 18px; }
   .res-num { color: #0f0; font-weight: bold; }
 
-  /* 3. BUTTON BAR - LIFTED */
-  #bot {
-    height: 18vh; width: 100%;
-    display: flex; flex-direction: column;
-    justify-content: flex-start; align-items: center;
-    padding-top: 10px;
-  }
+  #bot { height: 18vh; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; padding-top: 10px; }
   .row { display: flex; gap: 35px; margin-bottom: 12px; }
-  .btn {
-    width: 135px; height: 55px;
-    border: 4px solid #fff; border-radius: 12px;
-    color: #fff; font-weight: bold; font-size: 15px;
-  }
-  #ghost { height: 60px; width: 100%; }
+  .btn { width: 135px; height: 55px; border: 4px solid #fff; border-radius: 12px; color: #fff; font-weight: bold; font-size: 15px; }
+  #ghost { height: 65px; width: 100%; }
 </style>
 </head>
 <body>
 <div id="superContainer">
   <div id="top"><img id="ageImg" src="https://user.uploads.dev/file/fe81017f6eaa2d4475633a99025a08db.jpg"></div>
-  
   <div id="mid">
     <div id="news" class="white-line">ALBERT EIPENSTIEN MICROCOSM</div>
     <div id="last" class="white-line" style="font-size: 19px;">[OBSERVER STANDBY]</div>
-    <div id="effect" class="effect-line">SYSTEM SEALED. SUBJECTS UNDER WATCH.</div>
-    
-    <div class="stats-grid">
-      <span>YEAR: <span id="yVal">-7000</span></span>
-      <span>AGE: <span id="aVal">STONE AGE</span></span>
-    </div>
-    <div class="stats-grid">
-      <span>CIV 1: <span id="p1">1000</span> | FOOD: <span id="r1" class="res-num">100</span>%</span>
-    </div>
-    <div class="stats-grid">
-      <span>CIV 2: <span id="p2">1000</span> | FOOD: <span id="r2" class="res-num">100</span>%</span>
-    </div>
+    <div id="effect" class="effect-line">SYSTEM ONLINE. OBSERVATION LOG START.</div>
+    <div class="stats-grid"><span>YEAR: <span id="yVal">-7000</span></span><span>AGE: <span id="aVal">STONE AGE</span></span></div>
+    <div class="stats-grid"><span>CIV 1: <span id="p1">1000</span> | FOOD: <span id="r1" class="res-num">100</span>%</span></div>
+    <div class="stats-grid"><span>CIV 2: <span id="p2">1000</span> | FOOD: <span id="r2" class="res-num">100</span>%</span></div>
   </div>
-
   <div id="bot">
     <div class="row">
       <button class="btn" style="background:#800" onclick="act(0)" id="b0"></button>
@@ -84,7 +52,7 @@
 
 <script>
   let yr=-7000, age=1, p1=1000, p2=1000, res1=100, res2=100, active=false, paused=false;
-  let decisionTimer = 0; // The 8-second counter
+  let secCounter = 0; 
 
   const outcomes = {
     "HUNT": "NUTRITION SECURED; BLOODLUST RISING.",
@@ -101,7 +69,7 @@
   function roll() {
     let picks = [...pool].sort(()=>.5-Math.random()).slice(0,4);
     for(let i=0;i<4;i++) document.getElementById('b'+i).innerText = picks[i];
-    decisionTimer = 0; // Reset the 8-second clock on new roll
+    secCounter = 0; // Reset the 8-second counter
     return picks;
   }
   let current = roll();
@@ -120,7 +88,7 @@
       if(["HUNT","GATHER"].includes(move)) res2 = Math.min(100, res2 + 35);
       p2 += 150; p1 -= 60; 
     }
-    current = roll(); // act() calls roll(), which resets timer
+    current = roll(); // Reset occurs here on click
     update();
   }
 
@@ -129,11 +97,11 @@
     yr++;
     res1 -= 2.0; res2 -= 2.0; 
     
-    // The 8-Second Rule Logic
-    decisionTimer++;
-    if(decisionTimer >= 8) {
-      current = roll(); // Forced reset if you wait too long
-      document.getElementById('effect').innerText = "SYSTEM TIMEOUT: ACTION POOL REFRESHED.";
+    // FORCED RESET ENGINE
+    secCounter++;
+    if(secCounter >= 8) {
+      current = roll();
+      document.getElementById('effect').innerText = "OBSERVER HESITATION: POOL ROTATED.";
     }
 
     let p1L = (res1 <= 0) ? 30 : 5; 
@@ -146,7 +114,7 @@
       setTimeout(() => location.reload(), 4000);
     }
     update();
-  }, 1000); // Set to 1000ms for accurate 8-second counting
+  }, 1000);
 
   function update() {
     document.getElementById('yVal').innerText = yr;
